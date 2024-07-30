@@ -8,7 +8,6 @@ import { endpointOAIParametersSchema, endpointOai } from "./openai/endpointOai";
 import endpointLlamacpp, { endpointLlamacppParametersSchema } from "./llamacpp/endpointLlamacpp";
 import endpointOllama, { endpointOllamaParametersSchema } from "./ollama/endpointOllama";
 import endpointVertex, { endpointVertexParametersSchema } from "./google/endpointVertex";
-
 import {
 	endpointAnthropic,
 	endpointAnthropicParametersSchema,
@@ -25,6 +24,7 @@ import { endpointCohere, endpointCohereParametersSchema } from "./cohere/endpoin
 import endpointLangserve, {
 	endpointLangserveParametersSchema,
 } from "./langserve/endpointLangserve";
+import endpointUnify, { endpointUnifyParametersSchema } from "./unify/endpointUnify";
 
 import type { Tool, ToolCall, ToolResult } from "$lib/types/Tool";
 
@@ -68,6 +68,7 @@ export const endpoints = {
 	cloudflare: endpointCloudflare,
 	cohere: endpointCohere,
 	langserve: endpointLangserve,
+	unify: endpointUnify,
 };
 
 export const endpointSchema = z.discriminatedUnion("type", [
@@ -82,5 +83,6 @@ export const endpointSchema = z.discriminatedUnion("type", [
 	endpointCloudflareParametersSchema,
 	endpointCohereParametersSchema,
 	endpointLangserveParametersSchema,
+	endpointUnifyParametersSchema,
 ]);
 export default endpoints;
