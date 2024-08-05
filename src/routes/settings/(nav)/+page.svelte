@@ -10,10 +10,27 @@
 	import { useSettingsStore } from "$lib/stores/settings";
 	import Switch from "$lib/components/Switch.svelte";
 	import { env as envPublic } from "$env/dynamic/public";
+	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	let isConfirmingDeletion = false;
+	let unifyApiKey = writable('');
 
 	let settings = useSettingsStore();
+
+	onMount(() => {
+		// Load the saved API key from storage
+		const savedApiKey = localStorage.getItem('unifyApiKey');
+		if (savedApiKey) {
+			unifyApiKey.set(savedApiKey);
+		}
+	});
+
+	function saveApiKey() {
+		// Save the API key securely
+		localStorage.setItem('unifyApiKey', $unifyApiKey);
+		alert('API key saved successfully!');
+	}
 </script>
 
 <div class="flex w-full flex-col gap-5">
@@ -69,6 +86,11 @@
 				><CarbonTrashCan class="mr-2 inline text-sm text-red-500" />Delete all conversations</button
 			>
 		</div>
+
+		<label for="apiKey">Unify API Key:</label>
+		<input type="text" id="apiKey" bind:value={$unifyApiKey} />
+		<button on:click={saveApiKey}>Save API Key</button>
+
 	</div>
 
 	{#if isConfirmingDeletion}
