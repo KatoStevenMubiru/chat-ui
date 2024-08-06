@@ -72,6 +72,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		request: event.request,
 	});
 
+	event.locals.unifyApiKey = event.locals.apiKey || process.env.UNIFY_API_KEY;
+
 	if (event.url.pathname.startsWith(`${base}/api/`) && env.EXPOSE_API !== "true") {
 		return new Response("API is disabled", { status: 403 });
 	}
